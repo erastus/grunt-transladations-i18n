@@ -1,0 +1,5 @@
+label,es-MX,en
+common_address_1,Dirección 1,Adres 1
+common_address_2,Direncción 2,Adres 2
+common_city,Ciudad,Stad
+role.required,el campo {0} es requerido.,

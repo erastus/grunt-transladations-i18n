@@ -18,6 +18,7 @@ module.exports = function (grunt) {
     const objectPath = require("object-path");
     const EOL = os.EOL; // end of line for operating system
     const insertPositionMarker = '\uFFFD'; // Unicode REPLACEMENT CHARACTER -- http://www.fileformat.info/info/unicode/char/fffd/index.htm
+    const fs = require('fs')
 
     /**
      * Normalize the files paths for window (\) and unix (/)
@@ -57,6 +58,7 @@ module.exports = function (grunt) {
 
         srcFiles.forEach(function (destFile) {
             const file = path.basename(destFile);
+            const srcFilePath = path.dirname(destFile)
             console.log(`generating ${file}...`);
             //var fh = fopen ( __DIR__ . "/translations/" . $file, 'r' );
             const fh = grunt.file.read(destFile);
@@ -68,6 +70,20 @@ module.exports = function (grunt) {
                 if (h != 'label') {
                     language_files.push(h);
                 }
+            });
+
+            // make a directory in the output folder for each language
+            language_files.forEach( function(language) {
+                if (!fs.existsSync(path.join(output, language))) {
+                  fs.mkdirSync(path.join(output, language), { recursive: true });
+                }
+            });
+
+            // copy the index.js file to the output folder for each language
+            language_files.forEach( function(language) {
+                fs.copyFile(path.join(srcFilePath, 'index.js'), path.join(output, language, 'index.js'), (err) => {
+                  if (err) throw err;
+                });
             });
 
             language_files.forEach( function(language) {
@@ -84,7 +100,6 @@ module.exports = function (grunt) {
 
                grunt.file.defaultEncoding = 'utf8';
                grunt.file.write(filePath, jsonContent);
-
             });
         });
     };

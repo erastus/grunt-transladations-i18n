@@ -8,9 +8,6 @@
 
 'use strict';
 
-//import * as csv from 'fast-csv';
-//import {csv} from 'fast-csv';
-
 module.exports = function (grunt) {
     const path = require('path');
     const os = require('os');
@@ -56,12 +53,11 @@ module.exports = function (grunt) {
     Tags.prototype.processFile = function (output, srcFiles) {
         const that = this;
 
-        srcFiles.forEach(function (destFile) {
-            const file = path.basename(destFile);
-            const srcFilePath = path.dirname(destFile)
+        srcFiles.forEach(function (srcFile) {
+            const file = path.basename(srcFile);
+            const srcFilePath = path.dirname(srcFile)
             console.log(`generating ${file}...`);
-            //var fh = fopen ( __DIR__ . "/translations/" . $file, 'r' );
-            const fh = grunt.file.read(destFile);
+            const fh = grunt.file.read(srcFile);
             let language_files = [];
 
             // find out all lang files (columns) we're dealing with...

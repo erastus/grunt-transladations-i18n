@@ -1,6 +1,6 @@
 {
   "name": "grunt-transladations-i18n",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Move translations from CSV files to json files",
   "main": "index.js",
   "scripts": {
